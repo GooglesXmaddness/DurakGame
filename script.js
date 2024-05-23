@@ -122,14 +122,17 @@ document.addEventListener("DOMContentLoaded", function() {
             cardDiv.innerHTML = `<img src="${card.image}" alt="${card.rank} of ${card.suit}" class="card-image">`;
             cardDiv.style.position = 'absolute';
 
+            const offsetX = 30; // Horizontal offset between cards
+            const offsetY = 50; // Vertical offset between cards
+
             if (tableCards.length % 2 === 0) {
                 // First card (player or opponent)
-                cardDiv.style.left = `calc(50% - 25px)`; // Centered horizontally
-                cardDiv.style.top = `calc(50% - 35px)`;  // Centered vertically
+                cardDiv.style.left = `calc(50% - ${offsetX}px)`; // Centered horizontally with offset
+                cardDiv.style.top = `calc(50% - ${offsetY}px)`;  // Centered vertically with offset
             } else {
                 // Second card (opponent or player) - overlay on top of the first card
-                cardDiv.style.left = `calc(50% - 10px)`; // Slightly offset to show both cards
-                cardDiv.style.top = `calc(50% - 20px)`;  // Slightly offset to show both cards
+                cardDiv.style.left = `calc(50% - ${offsetX / 2}px)`; // Slightly offset to show both cards
+                cardDiv.style.top = `calc(50% - ${offsetY / 2}px)`;  // Slightly offset to show both cards
             }
 
             cardDiv.style.zIndex = tableCards.length; // Ensure the latest card is on top
