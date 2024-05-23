@@ -94,15 +94,17 @@ document.addEventListener("DOMContentLoaded", function() {
         cardDiv.style.position = 'absolute';
 
         if (tableCards.length % 2 === 0) {
-            cardDiv.style.left = `calc(50% - 25px)`; 
-            cardDiv.style.top = `calc(50% - 35px)`;  
+            // First card (player or opponent)
+            cardDiv.style.left = `calc(50% - 25px)`; // Centered horizontally
+            cardDiv.style.top = `calc(50% - 35px)`;  // Centered vertically
         } else {
-            cardDiv.style.left = `calc(50% - 10px)`; 
-            cardDiv.style.top = `calc(50% - 20px)`;  
+            // Second card (opponent or player) - overlay on top of the first card
+            cardDiv.style.left = `calc(50% - 10px)`; // Slightly offset to show both cards
+            cardDiv.style.top = `calc(50% - 20px)`;  // Slightly offset to show both cards
         }
 
-        cardDiv.style.zIndex = tableCards.length; 
-        cardDiv.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3)'; 
+        cardDiv.style.zIndex = tableCards.length; // Ensure the latest card is on top
+        cardDiv.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3)'; // Add shadow for visual distinction
         table.appendChild(cardDiv);
     }
 
