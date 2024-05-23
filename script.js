@@ -81,20 +81,24 @@ document.addEventListener("DOMContentLoaded", function() {
         cardDiv.className = 'card';
         cardDiv.innerHTML = `<img src="${card.image}" alt="${card.rank} of ${card.suit}" class="card-image">`;
         cardDiv.style.position = 'absolute';
+        cardDiv.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3)'; // Add shadow for visual distinction
 
         const offsetX = 30; // Horizontal offset between cards
         const offsetY = 50; // Vertical offset between cards
 
         if (tableCards.length % 2 === 0) {
-            cardDiv.style.left = `calc(50% - ${offsetX}px)`; // Centered horizontally with offset
-            cardDiv.style.top = `calc(50% - ${offsetY}px)`;  // Centered vertically with offset
+            // Place the first card of a new round in the center
+            cardDiv.style.left = `calc(50% - ${offsetX}px)`;
+            cardDiv.style.top = `calc(50% - ${offsetY}px)`;
         } else {
-            cardDiv.style.left = `calc(50% - ${offsetX / 2}px)`; // Slightly offset to show both cards
-            cardDiv.style.top = `calc(50% - ${offsetY / 2}px)`;  // Slightly offset to show both cards
+            // Place the second card of a round on top of the first card
+            const firstCard = table.querySelector('.card');
+            const firstCardRect = firstCard.getBoundingClientRect();
+            cardDiv.style.left = `${firstCardRect.left + offsetX / 2}px`;
+            cardDiv.style.top = `${firstCardRect.top + offsetY / 2}px`;
         }
 
         cardDiv.style.zIndex = tableCards.length; // Ensure the latest card is on top
-        cardDiv.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3)'; // Add shadow for visual distinction
         table.appendChild(cardDiv);
     }
 
