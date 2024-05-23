@@ -33,17 +33,17 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function updateUI() {
-        document.getElementById('player-hand').innerHTML = playerHand.map((card, index) => `<div class="card player-card" data-index="${index}"><object type="image/svg+xml" data="${card.image}" alt="${card.rank} of ${card.suit}" class="card-image"></object></div>`).join('');
-        document.getElementById('opponent-hand').innerHTML = opponentHand.map(card => `<div class="card opponent-card"><object type="image/svg+xml" data="Flat Playing Cards Set/back.svg" alt="card back" class="card-image"></object></div>`).join('');
-        document.getElementById('table').innerHTML = tableCards.map((card, index) => `<div class="card table-card" id="table-card-${index}"><object type="image/svg+xml" data="${card.image}" alt="${card.rank} of ${card.suit}" class="card-image"></object></div>`).join('');
+        document.getElementById('player-hand').innerHTML = playerHand.map((card, index) => `<div class="card player-card" data-index="${index}"><img src="${card.image}" alt="${card.rank} of ${card.suit}" class="card-image"></div>`).join('');
+        document.getElementById('opponent-hand').innerHTML = opponentHand.map(card => `<div class="card opponent-card"><img src="Flat Playing Cards Set/back.svg" alt="card back" class="card-image"></div>`).join('');
+        document.getElementById('table').innerHTML = tableCards.map((card, index) => `<div class="card table-card" id="table-card-${index}"><img src="${card.image}" alt="${card.rank} of ${card.suit}" class="card-image"></div>`).join('');
         
         // Display the trump card and a single card as the deck
         document.getElementById('deck-container').innerHTML = `
             <div id="deck" class="card">
-                <object type="image/svg+xml" data="Flat Playing Cards Set/back.svg" alt="card back" class="card-image"></object>
+                <img src="Flat Playing Cards Set/back.svg" alt="card back" class="card-image">
             </div>
             <div id="trump-card" class="card">
-                <object type="image/svg+xml" data="${trumpCard.image}" alt="${trumpCard.rank} of ${trumpCard.suit}" class="card-image"></object>
+                <img src="${trumpCard.image}" alt="${trumpCard.rank} of ${trumpCard.suit}" class="card-image">
             </div>
         `;
 
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function bindCardClickEvents() {
         document.querySelectorAll('.player-card').forEach(card => {
-            card.addEventListener('click', function() {
+            card.addEventListener('click', function(event) {
                 const index = card.getAttribute('data-index');
                 playCard(index);
             });
@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const table = document.getElementById('table');
         const cardDiv = document.createElement('div');
         cardDiv.className = 'card';
-        cardDiv.innerHTML = `<object type="image/svg+xml" data="${card.image}" alt="${card.rank} of ${card.suit}" class="card-image"></object>`;
+        cardDiv.innerHTML = `<img src="${card.image}" alt="${card.rank} of ${card.suit}" class="card-image">`;
         cardDiv.style.position = 'absolute';
 
         if (tableCards.length % 2 === 0) {
