@@ -51,8 +51,8 @@ body {
 }
 
 .card {
-    width: 40px; /* Adjust the width to fit better on screen */
-    height: 60px; /* Adjust the height to fit better on screen */
+    width: 30px; /* Smaller width */
+    height: 45px; /* Smaller height */
 }
 
 .card img {
