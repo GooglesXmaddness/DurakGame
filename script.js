@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let opponentHand = [];
     let tableCards = [];
     let trumpCard = '';
-    let isPlayerTurn = true; // Player starts
+    let isPlayerTurn = true;
 
     function createDeck() {
         suits.forEach(suit => {
@@ -33,13 +33,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function updateUI() {
         document.getElementById('player-hand').innerHTML = playerHand.map((card, index) => `<div class="card player-card" data-index="${index}"><img src="${card.image}" alt="${card.rank} of ${card.suit}" class="card-image"></div>`).join('');
-        document.getElementById('opponent-hand').innerHTML = opponentHand.map(card => `<div class="card opponent-card"><img src="Flat Playing Cards Set/back.svg" alt="card back" class="card-image"></div>`).join('');
+        document.getElementById('opponent-hand').innerHTML = opponentHand.map(card => `<div class="card opponent-card"><img src="Flat Playing Cards Set/back.png" alt="card back" class="card-image"></div>`).join('');
         document.getElementById('table').innerHTML = tableCards.map((card, index) => `<div class="card table-card" id="table-card-${index}"><img src="${card.image}" alt="${card.rank} of ${card.suit}" class="card-image"></div>`).join('');
         
         // Display the trump card and a single card as the deck
         document.getElementById('deck-container').innerHTML = `
             <div id="deck" class="card">
-                <img src="Flat Playing Cards Set/back.svg" alt="card back" class="card-image">
+                <img src="Flat Playing Cards Set/back.png" alt="card back" class="card-image">
             </div>
             <div id="trump-card" class="card">
                 <img src="${trumpCard.image}" alt="${trumpCard.rank} of ${trumpCard.suit}" class="card-image">
@@ -94,23 +94,17 @@ document.addEventListener("DOMContentLoaded", function() {
         cardDiv.style.position = 'absolute';
 
         if (tableCards.length % 2 === 0) {
-            // First card (player or opponent)
-            cardDiv.style.left = `calc(50% - 25px)`; // Centered horizontally
-            cardDiv.style.top = `calc(50% - 35px)`;  // Centered vertically
+            cardDiv.style.left = `calc(50% - 25px)`; 
+            cardDiv.style.top = `calc(50% - 35px)`;  
         } else {
-            // Second card (opponent or player) - overlay on top of the first card
-            cardDiv.style.left = `calc(50% - 10px)`; // Slightly offset to show both cards
-            cardDiv.style.top = `calc(50% - 20px)`;  // Slightly offset to show both cards
+            cardDiv.style.left = `calc(50% - 10px)`; 
+            cardDiv.style.top = `calc(50% - 20px)`;  
         }
 
-        cardDiv.style.zIndex = tableCards.length; // Ensure the latest card is on top
-        cardDiv.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3)'; // Add shadow for visual distinction
+        cardDiv.style.zIndex = tableCards.length; 
+        cardDiv.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3)'; 
         table.appendChild(cardDiv);
     }
-
-    createDeck();
-    dealCards();
-});
 
     createDeck();
     dealCards();
