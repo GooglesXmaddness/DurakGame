@@ -6,108 +6,144 @@ document.addEventListener("DOMContentLoaded", function() {
     let opponentHand = [];
     let tableCards = [];
     let trumpCard = '';
-    let isPlayerTurn = true;
+    let isPlayerTurn = true; // Player starts
 
     function createDeck() {
-        suits.forEach(suit => {
-            ranks.forEach(rank => {
-                deck.push({suit, rank, image: `Flat Playing Cards Set/${rank}_of_${suit}.svg`});
+        try {
+            suits.forEach(suit => {
+                ranks.forEach(rank => {
+                    deck.push({suit, rank, image: `Flat Playing Cards Set/${rank}_of_${suit}.svg`});
+                });
             });
-        });
-        shuffleDeck();
+            shuffleDeck();
+        } catch (error) {
+            console.error("Error in createDeck: ", error);
+        }
     }
 
     function shuffleDeck() {
-        for (let i = deck.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [deck[i], deck[j]] = [deck[j], deck[i]];
+        try {
+            for (let i = deck.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [deck[i], deck[j]] = [deck[j], deck[i]];
+            }
+        } catch (error) {
+            console.error("Error in shuffleDeck: ", error);
         }
     }
 
     function dealCards() {
-        playerHand = deck.splice(0, 6);
-        opponentHand = deck.splice(0, 6);
-        trumpCard = deck[0];
-        updateUI();
+        try {
+            playerHand = deck.splice(0, 6);
+            opponentHand = deck.splice(0, 6);
+            trumpCard = deck[0];
+            updateUI();
+        } catch (error) {
+            console.error("Error in dealCards: ", error);
+        }
     }
 
     function updateUI() {
-        document.getElementById('player-hand').innerHTML = playerHand.map((card, index) => `<div class="card player-card" data-index="${index}"><img src="${card.image}" alt="${card.rank} of ${card.suit}" class="card-image"></div>`).join('');
-        document.getElementById('opponent-hand').innerHTML = opponentHand.map(card => `<div class="card opponent-card"><img src="Flat Playing Cards Set/back.png" alt="card back" class="card-image"></div>`).join('');
-        document.getElementById('table').innerHTML = tableCards.map((card, index) => `<div class="card table-card" id="table-card-${index}"><img src="${card.image}" alt="${card.rank} of ${card.suit}" class="card-image"></div>`).join('');
-        
-        // Display the trump card and a single card as the deck
-        document.getElementById('deck-container').innerHTML = `
-            <div id="deck" class="card">
-                <img src="Flat Playing Cards Set/back.png" alt="card back" class="card-image">
-            </div>
-            <div id="trump-card" class="card">
-                <img src="${trumpCard.image}" alt="${trumpCard.rank} of ${trumpCard.suit}" class="card-image">
-            </div>
-        `;
+        try {
+            document.getElementById('player-hand').innerHTML = playerHand.map((card, index) => `<div class="card player-card" data-index="${index}"><img src="${card.image}" alt="${card.rank} of ${card.suit}" class="card-image"></div>`).join('');
+            document.getElementById('opponent-hand').innerHTML = opponentHand.map(card => `<div class="card opponent-card"><img src="Flat Playing Cards Set/back.png" alt="card back" class="card-image"></div>`).join('');
+            document.getElementById('table').innerHTML = tableCards.map((card, index) => `<div class="card table-card" id="table-card-${index}"><img src="${card.image}" alt="${card.rank} of ${card.suit}" class="card-image"></div>`).join('');
+            
+            // Display the trump card and a single card as the deck
+            document.getElementById('deck-container').innerHTML = `
+                <div id="deck" class="card">
+                    <img src="Flat Playing Cards Set/back.png" alt="card back" class="card-image">
+                </div>
+                <div id="trump-card" class="card">
+                    <img src="${trumpCard.image}" alt="${trumpCard.rank} of ${trumpCard.suit}" class="card-image">
+                </div>
+            `;
 
-        bindCardClickEvents();
+            bindCardClickEvents();
+        } catch (error) {
+            console.error("Error in updateUI: ", error);
+        }
     }
 
     function bindCardClickEvents() {
-        document.querySelectorAll('.player-card').forEach(card => {
-            card.addEventListener('click', function(event) {
-                const index = card.getAttribute('data-index');
-                playCard(index);
+        try {
+            document.querySelectorAll('.player-card').forEach(card => {
+                card.addEventListener('click', function(event) {
+                    const index = card.getAttribute('data-index');
+                    playCard(index);
+                });
             });
-        });
+        } catch (error) {
+            console.error("Error in bindCardClickEvents: ", error);
+        }
     }
 
     function playCard(index) {
-        if (!isPlayerTurn || tableCards.length >= 12) return;
-        const playerCard = playerHand.splice(index, 1)[0];
-        tableCards.push(playerCard);
-        placeCardOnTable(playerCard, true);
-        isPlayerTurn = false;
-        botPlay();
-        updateUI();
+        try {
+            if (!isPlayerTurn || tableCards.length >= 12) return;
+            const playerCard = playerHand.splice(index, 1)[0];
+            tableCards.push(playerCard);
+            placeCardOnTable(playerCard, true);
+            isPlayerTurn = false;
+            botPlay();
+            updateUI();
+        } catch (error) {
+            console.error("Error in playCard: ", error);
+        }
     }
 
     function botPlay() {
         setTimeout(() => {
-            if (tableCards.length % 2 === 0) {
-                // Bot attacks
-                const attackCard = opponentHand.pop();
-                tableCards.push(attackCard);
-                placeCardOnTable(attackCard, false);
-            } else {
-                // Bot defends
-                const defendCard = opponentHand.pop();
-                tableCards.push(defendCard);
-                placeCardOnTable(defendCard, false);
+            try {
+                if (tableCards.length % 2 === 0) {
+                    // Bot attacks
+                    const attackCard = opponentHand.pop();
+                    tableCards.push(attackCard);
+                    placeCardOnTable(attackCard, false);
+                } else {
+                    // Bot defends
+                    const defendCard = opponentHand.pop();
+                    tableCards.push(defendCard);
+                    placeCardOnTable(defendCard, false);
+                }
+                isPlayerTurn = true;
+                updateUI();
+            } catch (error) {
+                console.error("Error in botPlay: ", error);
             }
-            isPlayerTurn = true;
-            updateUI();
         }, 1000);
     }
 
     function placeCardOnTable(card, isPlayer) {
-        const table = document.getElementById('table');
-        const cardDiv = document.createElement('div');
-        cardDiv.className = 'card';
-        cardDiv.innerHTML = `<img src="${card.image}" alt="${card.rank} of ${card.suit}" class="card-image">`;
-        cardDiv.style.position = 'absolute';
+        try {
+            const table = document.getElementById('table');
+            const cardDiv = document.createElement('div');
+            cardDiv.className = 'card';
+            cardDiv.innerHTML = `<img src="${card.image}" alt="${card.rank} of ${card.suit}" class="card-image">`;
+            cardDiv.style.position = 'absolute';
 
-        if (tableCards.length % 2 === 0) {
-            // First card (player or opponent)
-            cardDiv.style.left = `calc(50% - 25px)`; // Centered horizontally
-            cardDiv.style.top = `calc(50% - 35px)`;  // Centered vertically
-        } else {
-            // Second card (opponent or player) - overlay on top of the first card
-            cardDiv.style.left = `calc(50% - 10px)`; // Slightly offset to show both cards
-            cardDiv.style.top = `calc(50% - 20px)`;  // Slightly offset to show both cards
+            if (tableCards.length % 2 === 0) {
+                // First card (player or opponent)
+                cardDiv.style.left = `calc(50% - 25px)`; // Centered horizontally
+                cardDiv.style.top = `calc(50% - 35px)`;  // Centered vertically
+            } else {
+                // Second card (opponent or player) - overlay on top of the first card
+                cardDiv.style.left = `calc(50% - 10px)`; // Slightly offset to show both cards
+                cardDiv.style.top = `calc(50% - 20px)`;  // Slightly offset to show both cards
+            }
+
+            cardDiv.style.zIndex = tableCards.length; // Ensure the latest card is on top
+            cardDiv.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3)'; // Add shadow for visual distinction
+            table.appendChild(cardDiv);
+        } catch (error) {
+            console.error("Error in placeCardOnTable: ", error);
         }
-
-        cardDiv.style.zIndex = tableCards.length; // Ensure the latest card is on top
-        cardDiv.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3)'; // Add shadow for visual distinction
-        table.appendChild(cardDiv);
     }
 
-    createDeck();
-    dealCards();
+    try {
+        createDeck();
+        dealCards();
+    } catch (error) {
+        console.error("Error in main execution: ", error);
+    }
 });
