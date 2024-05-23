@@ -1,4 +1,4 @@
-<!-- Force rebuild -->
+
 document.addEventListener("DOMContentLoaded", function() {
     const suits = ['hearts', 'diamonds', 'clubs', 'spades'];
     const ranks = ['6', '7', '8', '9', '10', 'jack', 'queen', 'king', 'ace'];
