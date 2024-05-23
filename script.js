@@ -112,3 +112,6 @@ document.addEventListener("DOMContentLoaded", function() {
     createDeck();
     dealCards();
 });
+    createDeck();
+    dealCards();
+});
