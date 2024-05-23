@@ -1,63 +1,54 @@
 body {
-    font-size: 16px;
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background-color: #2E7D32;
     margin: 0;
-    background: url("background.jpeg") no-repeat center center fixed;
-    background-size: cover;
-    color: white;
 }
 
-#game {
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
+#game-container {
+    width: 90%;
+    height: 90%;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-#player-hand, #opponent-hand, #table, #deck-container {
-    position: absolute;
+.hand, .table, .deck-container {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#player-hand {
-    bottom: 10%;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-#opponent-hand {
-    top: 10%;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-#table {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-#deck-container {
-    top: 50%;
-    left: 10%;
-    transform: translateY(-50%);
+.card {
+    width: 50px;
+    height: 70px;
+    margin: 5px;
     position: relative;
 }
 
-.card {
-    width: 30px; /* Smaller width */
-    height: 45px; /* Smaller height */
-}
-
-.card img {
+.card-image {
     width: 100%;
     height: 100%;
+    object-fit: cover;
     border-radius: 5px;
-    display: block;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.table {
+    position: relative;
+    height: 200px;
+}
+
+.card.player-card, .card.opponent-card {
+    cursor: pointer;
 }
